@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AttendEase - Smart and Simple Student Attendance Management.">
+  <title>AttendEase – Student Attendance Management System</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <img src="assets/logo.svg" alt="AttendEase logo">
+        <div>
+          <h1>AttendEase</h1>
+          <p>Attendance Manager</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#dashboard" class="nav-link" data-page="dashboard">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#students" class="nav-link" data-page="students">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Students</span>
+        </a>
+        <a href="#attendance" class="nav-link" data-page="attendance">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+          <span>Attendance</span>
+        </a>
+        <a href="#reports" class="nav-link" data-page="reports">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Reports</span>
+        </a>
+        <a href="#settings" class="nav-link" data-page="settings">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          <span>Settings / About</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Smart and Simple Student Attendance Management.</p>
+        <span>Version <span id="sidebarVersion">1.0.0</span></span>
+      </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ============ MAIN AREA ============ -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open navigation menu">&#9776;</button>
+        <div>
+          <h2 id="pageTitle">Dashboard</h2>
+          <p id="pageSubtitle"></p>
+        </div>
+        <div class="topbar-date" id="todayLabel"></div>
+      </header>
+
+      <main class="content">
+
+        <!-- ---------- DASHBOARD ---------- -->
+        <section class="page" id="page-dashboard">
+          <div class="hero">
+            <div>
+              <h3>Welcome to AttendEase</h3>
+              <p>Smart and Simple Student Attendance Management.</p>
+            </div>
+            <button class="btn btn-light" type="button" data-goto="attendance">Mark Today's Attendance</button>
+          </div>
+
+          <div class="stats-grid" id="dashStats"></div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <h3>Today's Attendance Summary</h3>
+                <span class="sub" id="todayDateText"></span>
+              </div>
+              <div id="todaySummary"></div>
+            </div>
+            <div class="card">
+              <div class="card-head">
+                <h3>Last 7 Days</h3>
+                <span class="sub">Attendance rate per day</span>
+              </div>
+              <div id="weekChart"></div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head">
+                <h3>Recent Students</h3>
+                <button class="btn btn-secondary btn-sm" type="button" data-goto="students">View all</button>
+              </div>
+              <div id="recentStudents"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><h3>Quick Actions</h3></div>
+              <div class="quick-actions">
+                <button class="btn" type="button" id="qaMark">Mark Attendance</button>
+                <button class="btn btn-secondary" type="button" id="qaAdd">Add Student</button>
+                <button class="btn btn-secondary" type="button" id="qaReports">View Reports</button>
+                <button class="btn btn-secondary" type="button" id="qaExport">Export CSV</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- STUDENTS ---------- -->
+        <section class="page" id="page-students">
+          <div class="toolbar">
+            <div class="grow">
+              <input class="input" id="studentSearch" type="search" placeholder="Search by name or roll number..." aria-label="Search students" autocomplete="off">
+            </div>
+            <select class="select" id="studentDeptFilter" aria-label="Filter by department"></select>
+            <select class="select" id="studentSemFilter" aria-label="Filter by semester"></select>
+            <button class="btn" type="button" id="addStudentBtn">+ Add Student</button>
+          </div>
+          <p class="hint" id="studentCount" style="margin-bottom:12px"></p>
+          <div class="table-wrap" id="studentsTableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th><th>Roll No.</th><th>Email</th><th>Department</th><th>Year / Semester</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsBody"></tbody>
+            </table>
+          </div>
+          <div class="card" id="studentsEmpty" hidden></div>
+        </section>
+
+        <!-- ---------- ATTENDANCE ---------- -->
+        <section class="page" id="page-attendance">
+          <div class="toolbar">
+            <div>
+              <label class="hint" for="attDate" style="display:block;margin-bottom:4px">Attendance date</label>
+              <input class="input fixed" id="attDate" type="date">
+            </div>
+            <div style="margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-self:flex-end">
+              <button class="btn btn-success" type="button" id="markAllPresentBtn">Mark All Present</button>
+              <button class="btn btn-secondary" type="button" id="clearAllBtn">Clear All</button>
+              <button class="btn" type="button" id="saveAttendanceBtn">Save Attendance</button>
+            </div>
+          </div>
+          <div class="banner" id="attBanner"></div>
+          <div class="chips" id="attSummary"></div>
+          <div class="table-wrap" id="attTableWrap">
+            <table>
+              <thead>
+                <tr><th>Student</th><th>Roll No.</th><th>Department</th><th>Mark Attendance</th><th>Status</th></tr>
+              </thead>
+              <tbody id="attBody"></tbody>
+            </table>
+          </div>
+          <div class="card" id="attEmpty" hidden></div>
+        </section>
+
+        <!-- ---------- REPORTS ---------- -->
+        <section class="page" id="page-reports">
+          <div class="toolbar">
+            <select class="select" id="repMonth" aria-label="Filter by month"></select>
+            <select class="select" id="repDept" aria-label="Filter by department"></select>
+            <button class="btn" type="button" id="exportCsvBtn" style="margin-left:auto">Export CSV</button>
+          </div>
+
+          <div class="stats-grid" id="repStats"></div>
+
+          <div class="card-head" style="margin:24px 0 12px">
+            <h3>Student Attendance</h3>
+            <span class="sub" id="repNote"></span>
+          </div>
+          <div class="table-wrap" id="repTableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th><th>Department</th>
+                  <th class="num">Present</th><th class="num">Absent</th><th class="num">Late</th><th class="num">Marked Days</th>
+                  <th>Attendance %</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="repBody"></tbody>
+            </table>
+          </div>
+          <div class="card" id="repEmpty" hidden></div>
+
+          <div class="card-head" style="margin:28px 0 12px">
+            <h3>Monthly Attendance Summary</h3>
+            <span class="sub">Follows the department filter</span>
+          </div>
+          <div class="table-wrap" id="monthTableWrap">
+            <table>
+              <thead>
+                <tr><th>Month</th><th class="num">Days Marked</th><th class="num">Present</th><th class="num">Late</th><th class="num">Absent</th><th>Attendance %</th></tr>
+              </thead>
+              <tbody id="monthBody"></tbody>
+            </table>
+          </div>
+          <div class="card" id="monthEmpty" hidden></div>
+        </section>
+
+        <!-- ---------- SETTINGS / ABOUT ---------- -->
+        <section class="page" id="page-settings">
+          <div class="stack">
+            <div class="card">
+              <div class="card-head"><h3>About AttendEase</h3></div>
+              <dl class="kv">
+                <dt>Application</dt><dd>AttendEase</dd>
+                <dt>Tagline</dt><dd>Smart and Simple Student Attendance Management.</dd>
+                <dt>Version</dt><dd id="aboutVersion">1.0.0</dd>
+                <dt>Description</dt>
+                <dd>A browser-based attendance system for colleges. It lets staff manage students, record daily attendance (Present / Absent / Late), and view percentage reports with a low-attendance warning and CSV export. All data is stored locally in the browser using LocalStorage, so no server is needed.</dd>
+                <dt>Technology stack</dt>
+                <dd><div class="tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Vanilla JavaScript</span><span class="tag">LocalStorage</span></div></dd>
+              </dl>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><h3>Preferences</h3></div>
+              <form id="settingsForm" novalidate>
+                <div class="field" style="max-width:320px">
+                  <label for="thresholdInput">Minimum attendance required (%)</label>
+                  <input class="input" id="thresholdInput" type="number" min="1" max="100" step="1" value="75">
+                  <span class="error" id="err-threshold"></span>
+                  <span class="hint">Students below this value are highlighted in Reports. Default is 75%.</span>
+                </div>
+                <button class="btn" type="submit">Save Settings</button>
+              </form>
+            </div>
+
+            <div class="card danger-zone">
+              <div class="card-head"><h3>Reset Demo Data</h3></div>
+              <p class="hint" style="margin-bottom:14px">Deletes all current students and attendance records and restores the original sample data. This cannot be undone.</p>
+              <button class="btn btn-danger" type="button" id="resetDataBtn">Reset Demo Data</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============ STUDENT MODAL ============ -->
+  <div class="modal-backdrop" id="studentModal" role="dialog" aria-modal="true" aria-labelledby="studentModalTitle">
+    <div class="modal">
+      <h3 id="studentModalTitle">Add Student</h3>
+      <p class="modal-sub">Fill in the student details below.</p>
+      <form id="studentForm" novalidate>
+        <div class="field">
+          <label for="stName">Student name</label>
+          <input class="input" id="stName" type="text" maxlength="60" placeholder="e.g. Aarav Sharma" autocomplete="off">
+          <span class="error" id="err-name"></span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="stRoll">Roll number</label>
+            <input class="input" id="stRoll" type="text" maxlength="20" placeholder="e.g. 21CSE001" autocomplete="off">
+            <span class="error" id="err-roll"></span>
+          </div>
+          <div class="field">
+            <label for="stEmail">Email</label>
+            <input class="input" id="stEmail" type="email" maxlength="80" placeholder="name@college.edu" autocomplete="off">
+            <span class="error" id="err-email"></span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="stDept">Department</label>
+            <select class="select" id="stDept"></select>
+            <span class="error" id="err-dept"></span>
+          </div>
+          <div class="field">
+            <label for="stSem">Year / Semester</label>
+            <select class="select" id="stSem"></select>
+            <span class="error" id="err-sem"></span>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" type="button" id="studentCancelBtn">Cancel</button>
+          <button class="btn" type="submit" id="studentSubmitBtn">Add Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ CONFIRM MODAL ============ -->
+  <div class="modal-backdrop" id="confirmModal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal small">
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p class="modal-sub" id="confirmMessage"></p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" id="confirmCancelBtn">Cancel</button>
+        <button class="btn btn-danger" type="button" id="confirmOkBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOASTS ============ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scripts: app.js must load first (core helpers), the rest add features -->
+  <script src="js/app.js"></script>
+  <script src="js/students.js"></script>
+  <script src="js/attendance.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>
